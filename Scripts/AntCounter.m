@@ -14,17 +14,17 @@ SHOW_PROGRESS_BAR =  true; % Enable if you are sitting at the computer and want 
 % Average Frame
 % The speed of the algorithm is dependent on the resolution of the video and the number of frames. Approximately 8000 frames at a resolution of 1920 x 1080 takes about 3.5 minutes.
 START_TIME_REFERENCE       = 0;   % Some real-valued time step less than the video duration
-NUMBER_OF_FRAMES_REFERENCE = -1;  % The more frames the better but the longer it will take. Use -1 for ALL FRAMES
+NUMBER_OF_FRAMES_REFERENCE = 100;  % The more frames the better but the longer it will take. Use -1 for ALL FRAMES
 
 % Get Bounding Box
-BINARY_THRESHOLD = 0.25; % How sensitive the algorithm is to fluctuations in the image data (i.e. detecting movement. Recommended Range: [0.2 0.35]
+BINARY_THRESHOLD = 0.35; % How sensitive the algorithm is to fluctuations in the image data (i.e. detecting movement. Recommended Range: [0.2 0.35]
 AREA_LB          = 100;  % Minimum area threshold of the ant bounding box. Recommended Value: 100
 AREA_UB          = 1000; % Maximum area threshold of the ant bounding box. Recommended Value: 1000
 
 % Ant Counting
 REGIONS                   = 4;   % Number of specific regions to count ants
 START_TIME_COUNTING       = 0;   % Some real-valued time step to begin the ant counting
-NUMBER_OF_FRAMES_COUNTING = -1; % The number of frames in which to count the ants.
+NUMBER_OF_FRAMES_COUNTING = 1000;  % The number of frames in which to count the ants.
 
 %% Step 1 - Preproecssing
 % The objective is to get a base frame devoid of any ants to more easily count the ants in Step 2.
@@ -111,7 +111,7 @@ fprintf(outputFile, 'START_TIME_COUNTING:        %0.4d\n', START_TIME_COUNTING);
 fprintf(outputFile, 'NUMBER_OF_FRAMES_COUNTING:  %0.0d\n', NUMBER_OF_FRAMES_COUNTING);
 fprintf(outputFile, '\n');
 fprintf(outputFile, '---RESULTS---\n');
-for r = 1:size(REGIONS,2)
+for r = 1:REGIONS
   fprintf(outputFile, '\tRegion:   %0.0f\n', r);
   fprintf(outputFile, '\t\tMin:    %0.0f\n', min(Count(:,r)));
   fprintf(outputFile, '\t\tMax:    %0.0f\n', max(Count(:,r)));
@@ -121,9 +121,9 @@ end
 fclose(outputFile);
 
 save(VARIABLE_FILENAME, 'CleanFrame', 'Count');
-clear AREA_LB AREA_UB AverageFrame BB BINARY_THRESHOLD CurrentFrame input MaxFrameCount NUMBER_OF_FRAMES_COUNTING ...
-  NUMBER_OF_FRAMES_REFERENCE Regions REGIONS SHOW_PROGRESS_BAR START_TIME_COUNTING START_TIME_REFERENCE VARIABLE_FILENAME VIDEO_FILENAME ...
-  VideoData waitFigure figHandle input1 input2 k outputFile r X
+%clear AREA_LB AREA_UB AverageFrame BB BINARY_THRESHOLD CurrentFrame input MaxFrameCount NUMBER_OF_FRAMES_COUNTING ...
+%  NUMBER_OF_FRAMES_REFERENCE Regions REGIONS SHOW_PROGRESS_BAR START_TIME_COUNTING START_TIME_REFERENCE VARIABLE_FILENAME VIDEO_FILENAME ...
+%  VideoData waitFigure figHandle input1 input2 k outputFile r X
 
 
 %% Helper Functions
